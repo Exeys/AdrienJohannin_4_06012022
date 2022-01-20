@@ -12,18 +12,41 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelector(".close");
+const modalConfirm = document.querySelector(".confirmation");
+const submitBtn = document.querySelector(".btn-submit");
+const closeConfirmBtn = document.getElementById("closeConfirmation");
+const form = document.getElementById("form");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
+
 // Close modal event
 closeBtn.addEventListener("click", closeModal);
+closeConfirmBtn.addEventListener("click", closeConfirmModal);
+
+// Submit modal event
+function submitModal() {
+  closeModal();
+  launchConfirmModal();
+  form.reset();
+}
 
 
+
+// Launch modal confirm
+function launchConfirmModal() {
+  modalConfirm.style.display = "block";
+}
 
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
+}
+
+// Close confirmation modal
+function closeConfirmModal() {
+  modalConfirm.style.display = "none";
 }
 
 // Close modal form
@@ -44,6 +67,7 @@ const location4 = document.getElementById("location4");
 const location5 = document.getElementById("location5");
 const location6 = document.getElementById("location6");
 const cgu = document.getElementById("checkbox1");
+const locations = document.getElementsByName("location");
 
 // Errors
 const fnError = document.getElementById("firstAlert");
@@ -57,55 +81,95 @@ const cguError = document.getElementById("cguAlert");
 
 function validateForm(e) {
   e.preventDefault();
+  let nbErrors = 0;
   if (!validateFirstName()) {
     fnError.style.display = "block";
-  } else if (!validateLastName()) {
+    nbErrors++;
+  } else {
+    fnError.style.display = "none";
+  }
+  if (!validateLastName()) {
     lnError.style.display = "block";
-  } else if (!validateEmail(email)) {
+    nbErrors++;
+  } else {
+    lnError.style.display = "none"
+  }
+  if (!validateEmail(email)) {
     emailError.style.display = "block";
-  } else if (!validateBirthdate(birthdate)) {
+    nbErrors++;
+  } else {
+    emailError.style.display = "none"
+  }
+  if (!validateBirthdate(birthdate)) {
     birthdateError.style.display = "block";
-  } else if (!validateContest()) {
+    nbErrors++;
+  } else {
+    birthdateError.style.display = "none"
+  }
+  if (!validateContest()) {
     quantityError.style.display = "block";
-  } else if (!validateLocation()) {
+    nbErrors++;
+  } else {
+    quantityError.style.display = "none"
+  }
+  if (!validateLocation()) {
     locationError.style.display = "block";
-  } else if (!validateConditions()) {
+    nbErrors++;
+  } else {
+    locationError.style.display = "none"
+  }
+  if (!validateConditions()) {
     cguError.style.display = "block";
+    nbErrors++;
+  } else {
+    cguError.style.display = "none"
+  }
+  if (nbErrors === 0) {
+    submitModal();
   }
 }
 
 function validateFirstName() {
-  if (firstName.value.length >= 2) {
-    return true;
-  }
-}
-function validateLastName() {
-  if (lastName.value.length >= 2) {
-    return true
-  }
+  return firstName.value.length >= 2;
 }
 
+function validateLastName() {
+  return lastName.value.length >= 2;
+}
+
+
 function validateEmail(email) {
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))
-    return true;
+  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value);
 }
 
 function validateBirthdate(birthdate) {
-  if (/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/.test(birthdate.value))
+  var todayDate = new Date();
+  var birthdate = birthdate.value;
+  birthdate = new Date(birthdate)
+  var diff = todayDate.getTime() - birthdate.getTime();
+  var diffInSeconds = diff / 1000;
+  var majorityInSeconds = 567648000
+
+  if (diffInSeconds >= majorityInSeconds) {
     return true;
+  }
 }
 
 function validateContest() {
-  if (/^\+?(0|[1-9]\d*)$/.test(quantity.value)) {
-    return true;
-  }
+  return (/^\+?(0|[1-9]\d*)$/.test(quantity.value));
 }
 
+
 function validateLocation() {
-  if (location1.checked || location2.checked || location3.checked || location4.checked || location5.checked || location6.checked) {
-    return true
-  }
+  var result = false;
+  locations.forEach(location => {
+    if (location.checked) {
+      result = true;
+    }
+  })
+  return result;
 }
+
 
 function validateConditions() {
   if (cgu.checked) {
