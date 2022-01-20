@@ -1,5 +1,5 @@
 function editNav() {
-  var x = document.getElementById("myTopnav");
+  let x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
     x.className += " responsive";
   } else {
@@ -74,6 +74,7 @@ const fnError = document.getElementById("firstAlert");
 const lnError = document.getElementById("lastAlert");
 const emailError = document.getElementById("emailAlert");
 const birthdateError = document.getElementById("birthdateAlert");
+const birthdateError2 = document.getElementById("birthdateAlert2");
 const quantityError = document.getElementById("quantityAlert");
 const locationError = document.getElementById("locationAlert");
 const cguError = document.getElementById("cguAlert");
@@ -100,12 +101,21 @@ function validateForm(e) {
   } else {
     emailError.style.display = "none"
   }
-  if (!validateBirthdate(birthdate)) {
+  if (birthdate.value === "") {
     birthdateError.style.display = "block";
     nbErrors++;
   } else {
     birthdateError.style.display = "none"
+    if (!validateBirthdate(birthdate)) {
+      birthdateError2.style.display = "block";
+      nbErrors++;
+    } else {
+      birthdateError2.style.display = "none"
+    }
+
   }
+
+
   if (!validateContest()) {
     quantityError.style.display = "block";
     nbErrors++;
@@ -129,6 +139,7 @@ function validateForm(e) {
   }
 }
 
+
 function validateFirstName() {
   return firstName.value.length >= 2;
 }
@@ -143,12 +154,11 @@ function validateEmail(email) {
 }
 
 function validateBirthdate(birthdate) {
-  var todayDate = new Date();
-  var birthdate = birthdate.value;
-  birthdate = new Date(birthdate)
-  var diff = todayDate.getTime() - birthdate.getTime();
-  var diffInSeconds = diff / 1000;
-  var majorityInSeconds = 567648000
+  let todayDate = new Date();
+  let birthdateDate = new Date(birthdate.value);
+  let diff = todayDate.getTime() - birthdateDate.getTime();
+  let diffInSeconds = diff / 1000;
+  let majorityInSeconds = 568036800
 
   if (diffInSeconds >= majorityInSeconds) {
     return true;
@@ -161,7 +171,7 @@ function validateContest() {
 
 
 function validateLocation() {
-  var result = false;
+  let result = false;
   locations.forEach(location => {
     if (location.checked) {
       result = true;
