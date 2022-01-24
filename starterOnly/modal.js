@@ -32,8 +32,6 @@ function submitModal() {
   form.reset();
 }
 
-
-
 // Launch modal confirm
 function launchConfirmModal() {
   modalConfirm.style.display = "block";
@@ -79,7 +77,9 @@ const quantityError = document.getElementById("quantityAlert");
 const locationError = document.getElementById("locationAlert");
 const cguError = document.getElementById("cguAlert");
 
-
+// Fonction général, appellé à l'envoi du formulaire HTML
+// Appelle l'ensemble des fonctions de validations et affiche les erreurs si la validation a échoué (faux)
+// Si il n'y a plus d'erreurs, le formulaire est correctement "envoyé" et appelle la fonction submit() qui ferme la modal et renvoie sur un message de validation
 function validateForm(e) {
   e.preventDefault();
   let nbErrors = 0;
@@ -112,10 +112,7 @@ function validateForm(e) {
     } else {
       birthdateError2.style.display = "none"
     }
-
   }
-
-
   if (!validateContest()) {
     quantityError.style.display = "block";
     nbErrors++;
@@ -139,20 +136,29 @@ function validateForm(e) {
   }
 }
 
-
+// Fonction de validation du prénom
+// Retourne vrai si le nombre de caractères saisi est supérieur à 2 / n'est pas vide
 function validateFirstName() {
   return firstName.value.length >= 2;
 }
 
+// Fonction de validation du nom
+// Retourne vrai si le nombre de caractères saisi est supérieur à 2 / n'est pas vide
 function validateLastName() {
   return lastName.value.length >= 2;
 }
 
-
+// Fonction de validation de l'email
+// Retourne vrai si l'adresse saisie est une adresse email
+// Ici, une adresse mail valide est une adresse comportant une suite de caractères 
+// suivi d'un @ suivi d'une suite de caractères, d'un point et d'une extension de domaine de 2 ou 3 caractères
 function validateEmail(email) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value);
 }
 
+// Fonction de validation de l'anniversaire
+// Retourne vrai si le temps en secondes depuis la naissance est supérieur au nombre de secondes dans 18 années
+// En admettant qu'une inscription n'est possible qu'en étant majeur
 function validateBirthdate(birthdate) {
   let todayDate = new Date();
   let birthdateDate = new Date(birthdate.value);
@@ -165,11 +171,14 @@ function validateBirthdate(birthdate) {
   }
 }
 
+// Fonction de validation du nombre de concours
+// Retourne vrai si la saisie est une valeur numérique
 function validateContest() {
   return (/^\+?(0|[1-9]\d*)$/.test(quantity.value));
 }
 
-
+// Fonction de validation 
+// Retourne vrai si l'un des boutons radio est coché
 function validateLocation() {
   let result = false;
   locations.forEach(location => {
@@ -180,7 +189,8 @@ function validateLocation() {
   return result;
 }
 
-
+// Fonction de validation des conditions générales d'utilisations
+// Retourne vrai si la checkbox est coché
 function validateConditions() {
   if (cgu.checked) {
     return true;
