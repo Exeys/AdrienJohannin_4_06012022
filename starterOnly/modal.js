@@ -20,10 +20,29 @@ const form = document.getElementById("form");
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-
-// Close modal event
+// Close modal events
 closeBtn.addEventListener("click", closeModal);
 closeConfirmBtn.addEventListener("click", closeConfirmModal);
+
+// launch modal form
+function launchModal() {
+  modalbg.style.display = "block";
+}
+
+// Close modal form
+function closeModal() {
+  modalbg.style.display = "none";
+}
+
+// Launch modal confirm
+function launchConfirmModal() {
+  modalConfirm.style.display = "block";
+}
+
+// Close confirmation modal
+function closeConfirmModal() {
+  modalConfirm.style.display = "none";
+}
 
 // Submit modal event
 function submitModal() {
@@ -32,25 +51,6 @@ function submitModal() {
   form.reset();
 }
 
-// Launch modal confirm
-function launchConfirmModal() {
-  modalConfirm.style.display = "block";
-}
-
-// launch modal form
-function launchModal() {
-  modalbg.style.display = "block";
-}
-
-// Close confirmation modal
-function closeConfirmModal() {
-  modalConfirm.style.display = "none";
-}
-
-// Close modal form
-function closeModal() {
-  modalbg.style.display = "none";
-}
 
 // FORM Elements
 const firstName = document.getElementById("first");
