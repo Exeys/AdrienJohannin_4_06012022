@@ -1,6 +1,8 @@
 
 🙍‍♂️ Adrien Johannin - Projet 4 (Créez une landing page avec Javascript)
-# GameOn
+
+
+![](https://user.oc-static.com/upload/2020/08/14/15974189526297_image1.png)
 
 ## 🔨Contexte
 Vous avez récemment été embauché comme développeur Front-End junior dans une PME, GameOn, spécialisée dans les conférences et les concours de jeux. 
